@@ -1,12 +1,11 @@
-class FunctionNotes {
-    fun add(title: String, text: String, userId: Int): Int {
-        var notes: Notes = Notes(title, text, userId)
+class FunctionNotes(val nullCode: Int = 0): Function<Notes> {
+    override fun add(notes: Notes, nullCode: Int): Int {
         notesMap.put(notesMap.size + 1, notes)
         notes.noteId = notesMap.size
         return notes.noteId
     }
 
-    fun delete(noteId: Int): Boolean {
+    override fun delete(noteId: Int, nullCode: Int): Boolean {
         return if (notesMap[noteId]?.visibility != true) {
             println("Заметка не найдена. Удаление невозможно!")
             false
@@ -24,9 +23,9 @@ class FunctionNotes {
         }
     }
 
-    fun edit(noteId: Int, title: String, text: String, userId: Int): Boolean {
+    override fun edit(noteId: Int, notes: Notes, nullCode: Int): Boolean {
         return if (notesMap[noteId]?.visibility == true) {
-            notesMap.put(noteId, Notes(title, text, userId))
+            notesMap.put(noteId, notes)
             println("Заметка отредактирована!")
             true
         } else {
@@ -35,7 +34,7 @@ class FunctionNotes {
         }
     }
 
-    fun get(userId: Int) : Boolean {
+    override fun get(userId: Int, nullCode: Int) : Boolean {
         var i = 0
         val returnList = mutableListOf<Notes>()
         for (note in notesMap.values) {

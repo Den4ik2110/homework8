@@ -7,13 +7,11 @@ class FunctionKtTest {
     @Test
     fun add() {
         // arrange
-        val titleTest = "Title Test"
-        val textTest = "Text Test"
-        val userIdTest = 222
+        val notesTest = Notes("Title Test", "Text Test", 222)
 
         // act
         notesMap.clear()
-        val result = FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
+        val result = FunctionNotes().add(notes = notesTest, 0)
 
         // assert
         assertEquals(1, result)
@@ -26,7 +24,7 @@ class FunctionKtTest {
 
         // act
         notesMap.clear()
-        val result = FunctionNotes().delete(noteId = noteId)
+        val result = FunctionNotes().delete(noteId = noteId, 0)
 
         // assert
         assertEquals(false, result)
@@ -35,15 +33,13 @@ class FunctionKtTest {
     @Test
     fun deleteElseTrue() {
         // arrange
-        val titleTest = "Title Test"
-        val textTest = "Text Test"
-        val userIdTest = 222
+        val notesTest = Notes("Title Test", "Text Test", 222)
         val noteIdTest = 1
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        val result = FunctionNotes().delete(noteId = noteIdTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        val result = FunctionNotes().delete(noteId = noteIdTest, 0)
 
         // assert
         assertEquals(true, result)
@@ -52,18 +48,14 @@ class FunctionKtTest {
     @Test
     fun editTrue() {
         // arrange
+        val notesTest = Notes("Title Test", "Text Test", 222)
+        val notesTestEdit = Notes("Title Test", "Text Test", 222)
         val noteIdTest = 1
-        val editNoteIdTest = 5
-        val titleTest = "Title Test"
-        val textTest = "Text Test"
-        val editTitleTest = "Edit title"
-        val editTextTest = "Edit text"
-        val userIdTest = 222
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        val result = FunctionNotes().edit(noteId = noteIdTest, title = editTitleTest, text = editTextTest, userId = userIdTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        val result = FunctionNotes().edit(noteId = noteIdTest, notes = notesTestEdit, 0)
 
         // assert
         assertEquals(true, result)
@@ -72,18 +64,14 @@ class FunctionKtTest {
     @Test
     fun editFalse() {
         // arrange
-        val noteIdTest = 1
+        val notesTest = Notes("Title Test", "Text Test", 222)
+        val notesTestEdit = Notes("Title Test", "Text Test", 222)
         val editNoteIdTest = 5
-        val titleTest = "Title Test"
-        val textTest = "Text Test"
-        val editTitleTest = "Edit title"
-        val editTextTest = "Edit text"
-        val userIdTest = 222
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        val result = FunctionNotes().edit(noteId = editNoteIdTest, title = editTitleTest, text = editTextTest, userId = userIdTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        val result = FunctionNotes().edit(noteId = editNoteIdTest, notes = notesTestEdit, 0)
 
         // assert
         assertEquals(false, result)
@@ -92,15 +80,13 @@ class FunctionKtTest {
     @Test
     fun getFalse() {
         // arrange
-        val titleTest = "Title Test"
-        val textTest = "Text Test"
-        val userIdTest = 222
+        val notesTest = Notes("Title Test", "Text Test", 222)
         val editUserIdTest = 223
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        val result = FunctionNotes().get(userId = editUserIdTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        val result = FunctionNotes().get(userId = editUserIdTest, 0)
 
         // assert
         assertEquals(false, result)
@@ -109,15 +95,13 @@ class FunctionKtTest {
     @Test
     fun getTrue() {
         // arrange
-        val titleTest = "Title Test"
-        val textTest = "Text Test"
-        val userIdTest = 222
+        val notesTest = Notes("Title Test", "Text Test", 222)
         val editUserIdTest = 222
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        val result = FunctionNotes().get(userId = editUserIdTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        val result = FunctionNotes().get(userId = editUserIdTest, 0)
 
         // assert
         assertEquals(true, result)
@@ -126,15 +110,13 @@ class FunctionKtTest {
     @Test
     fun getById() {
         // arrange
-        val titleTest = "Title Test"
-        val textTest = "Text Test"
-        val userIdTest = 222
+        val notesTest = Notes("Title Test", "Text Test", 222)
         val noteIdTest = 1
         val editNoteIdTest = 2
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
+        FunctionNotes().add(notes = notesTest, 0)
         FunctionNotes().getById(noteIdTest)
         val result = FunctionNotes().getById(editNoteIdTest)
 
@@ -146,16 +128,13 @@ class FunctionKtTest {
     @Test
     fun createComment() {
         // arrange
-        val noteIdText = 1
-        val messageTest = "Text Test Comment"
-        val titleTest = " "
-        val textTest = " "
-        val userIdTest = 222
+        val notesTest = Notes("Title Test", "Text Test", 222)
+        val commentTest = Comments(1, "Text Test Comment")
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        val result = FunctionComments().createComment(noteId = noteIdText, message = messageTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        val result = FunctionComments().add(commentTest, 1)
 
         // assert
         assertEquals(1, result)
@@ -165,17 +144,15 @@ class FunctionKtTest {
     fun deleteCommentElseTrue() {
         // arrange
         val noteIdText = 1
-        val messageTest = "Text Test Comment"
-        val titleTest = " "
-        val textTest = " "
-        val userIdTest = 222
         val commentIdTest = 1
+        val notesTest = Notes("Title Test", "Text Test", 222)
+        val commentTest = Comments(1, "Text Test Comment")
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        FunctionComments().createComment(noteId = noteIdText, message = messageTest)
-        val result = FunctionComments().deleteComment(noteId = noteIdText, commentId = commentIdTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        FunctionComments().add(commentTest, 1)
+        val result = FunctionComments().delete(noteId = noteIdText, commentId = commentIdTest)
 
         // assert
         assertEquals(true, result)
@@ -184,19 +161,16 @@ class FunctionKtTest {
     @Test
     fun deleteCommentIfFalse() {
         // arrange
-        val noteIdText = 1
         val editNoteTextId = 5
-        val messageTest = "Text Test Comment"
-        val titleTest = " "
-        val textTest = " "
-        val userIdTest = 222
         val commentIdTest = 1
+        val notesTest = Notes("Title Test", "Text Test", 222)
+        val commentTest = Comments(1, "Text Test Comment")
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        FunctionComments().createComment(noteId = noteIdText, message = messageTest)
-        val result = FunctionComments().deleteComment(noteId = editNoteTextId, commentId = commentIdTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        FunctionComments().add(commentTest, 1)
+        val result = FunctionComments().delete(noteId = editNoteTextId, commentId = commentIdTest)
 
         // assert
         assertEquals(false, result)
@@ -206,17 +180,15 @@ class FunctionKtTest {
     fun deleteCommentElseFalse() {
         // arrange
         val noteIdText = 1
-        val messageTest = "Text Test Comment"
-        val titleTest = " "
-        val textTest = " "
-        val userIdTest = 222
         val commentIdTest = 5
+        val notesTest: Notes = Notes("Title Test", "Text Test", 222)
+        val commentTest: Comments = Comments(1, "Text Test Comment")
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        FunctionComments().createComment(noteId = noteIdText, message = messageTest)
-        val result = FunctionComments().deleteComment(noteId = noteIdText, commentId = commentIdTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        FunctionComments().add(commentTest, 1)
+        val result = FunctionComments().delete(noteId = noteIdText, commentId = commentIdTest)
 
         // assert
         assertEquals(false, result)
@@ -225,20 +197,18 @@ class FunctionKtTest {
     @Test
     fun editCommentIfFalse() {
         // arrange
-        val noteIdTest = 1
         val editNoteIdTest = 5
-        val messageTest = "Text Test Comment"
-        val editMessageTest = " Edit text"
-        val titleTest = " "
-        val textTest = " "
-        val userIdTest = 222
         val commentIdTest = 1
+        val notesTest = Notes("Title Test", "Text Test", 222)
+        val commentTest = Comments(1, "Text Test Comment")
+        val commentTestEdit = Comments(1, "Edit Text")
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        FunctionComments().createComment(noteId = noteIdTest, message = messageTest)
-        val result = FunctionComments().editComment(noteId = editNoteIdTest, commentId = commentIdTest, message = editMessageTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        FunctionComments().add(commentTest, 1)
+        val result =
+            FunctionComments().edit(noteId = editNoteIdTest, commentId = commentIdTest, comments = commentTestEdit)
 
         // assert
         assertEquals(false, result)
@@ -248,18 +218,16 @@ class FunctionKtTest {
     fun editCommentElseTrue() {
         // arrange
         val noteIdTest = 1
-        val messageTest = "Text Test Comment"
-        val editMessageTest = " Edit text"
-        val titleTest = " "
-        val textTest = " "
-        val userIdTest = 222
         val commentIdTest = 1
+        val notesTest = Notes("Title Test", "Text Test", 222)
+        val commentTest = Comments(1, "Text Test Comment")
+        val commentTestEdit = Comments(1, "Edit Text")
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        FunctionComments().createComment(noteId = noteIdTest, message = messageTest)
-        val result = FunctionComments().editComment(noteId = noteIdTest, commentId = commentIdTest, message = editMessageTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        FunctionComments().add(commentTest, 1)
+        val result = FunctionComments().edit(noteId = noteIdTest, commentId = commentIdTest, comments = commentTestEdit)
 
         // assert
         assertEquals(true, result)
@@ -269,18 +237,16 @@ class FunctionKtTest {
     fun editCommentElseFalse() {
         // arrange
         val noteIdTest = 1
-        val messageTest = "Text Test Comment"
-        val editMessageTest = " Edit text"
-        val titleTest = " "
-        val textTest = " "
-        val userIdTest = 222
         val commentIdTest = 5
+        val notesTest = Notes("Title Test", "Text Test", 222)
+        val commentTest = Comments(1, "Text Test Comment")
+        val commentTestEdit = Comments(1, "Edit Text")
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        FunctionComments().createComment(noteId = noteIdTest, message = messageTest)
-        val result = FunctionComments().editComment(noteId = noteIdTest, commentId = commentIdTest, message = editMessageTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        FunctionComments().add(commentTest, 1)
+        val result = FunctionComments().edit(noteId = noteIdTest, commentId = commentIdTest, comments = commentTestEdit)
 
         // assert
         assertEquals(false, result)
@@ -290,17 +256,15 @@ class FunctionKtTest {
     fun getCommentsTrue() {
         // arrange
         val noteIdTest = 1
-        val titleTest = " "
-        val textTest = " "
-        val userIdTest = 222
         val countTest = 1
-        val messageTest = "Text Test Comment"
+        val notesTest = Notes("Title Test", "Text Test", 222)
+        val commentTest = Comments(1, "Text Test Comment")
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        FunctionComments().createComment(noteId = noteIdTest, message = messageTest)
-        val result = FunctionComments().getComments(noteId = noteIdTest, count = countTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        FunctionComments().add(commentTest, 1)
+        val result = FunctionComments().get(noteId = noteIdTest, count = countTest)
 
         // assert
         assertEquals(true, result)
@@ -309,19 +273,16 @@ class FunctionKtTest {
     @Test
     fun getCommentsFalse() {
         // arrange
-        val noteIdTest = 1
         val editNoteIdTest = 5
-        val titleTest = " "
-        val textTest = " "
-        val userIdTest = 222
         val countTest = 1
-        val messageTest = "Text Test Comment"
+        val notesTest = Notes("Title Test", "Text Test", 222)
+        val commentTest = Comments(1, "Text Test Comment")
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        FunctionComments().createComment(noteId = noteIdTest, message = messageTest)
-        val result = FunctionComments().getComments(noteId =editNoteIdTest, count = countTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        FunctionComments().add(commentTest, 1)
+        val result = FunctionComments().get(noteId = editNoteIdTest, count = countTest)
 
         // assert
         assertEquals(false, result)
@@ -331,17 +292,15 @@ class FunctionKtTest {
     fun restoreCommentElseTrue() {
         // arrange
         val noteIdTest = 1
-        val messageTest = "Text Test Comment"
-        val titleTest = " "
-        val textTest = " "
-        val userIdTest = 222
         val commentIdTest = 1
+        val notesTest = Notes("Title Test", "Text Test", 222)
+        val commentTest = Comments(1, "Text Test Comment")
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        FunctionComments().createComment(noteId = noteIdTest, message = messageTest)
-        FunctionComments().deleteComment(noteId = noteIdTest, commentId = commentIdTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        FunctionComments().add(commentTest, 1)
+        FunctionComments().delete(noteId = noteIdTest, commentId = commentIdTest)
         val result = FunctionComments().restoreComments(noteId = noteIdTest, commentId = commentIdTest)
 
         // assert
@@ -353,17 +312,15 @@ class FunctionKtTest {
         // arrange
         val noteIdTest = 1
         val editNoteTestId = 5
-        val messageTest = "Text Test Comment"
-        val titleTest = " "
-        val textTest = " "
-        val userIdTest = 222
         val commentIdTest = 1
+        val notesTest = Notes("Title Test", "Text Test", 222)
+        val commentTest = Comments(1, "Text Test Comment")
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        FunctionComments().createComment(noteId = noteIdTest, message = messageTest)
-        FunctionComments().deleteComment(noteId = noteIdTest, commentId = commentIdTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        FunctionComments().add(commentTest, 1)
+        FunctionComments().delete(noteId = noteIdTest, commentId = commentIdTest)
         val result = FunctionComments().restoreComments(noteId = editNoteTestId, commentId = commentIdTest)
 
         // assert
@@ -374,17 +331,15 @@ class FunctionKtTest {
     fun restoreCommentElseFalse() {
         // arrange
         val noteIdTest = 1
-        val messageTest = "Text Test Comment"
-        val titleTest = " "
-        val textTest = " "
-        val userIdTest = 222
         val commentIdTest = 5
+        val notesTest = Notes("Title Test", "Text Test", 222)
+        val commentTest = Comments(1, "Text Test Comment")
 
         // act
         notesMap.clear()
-        FunctionNotes().add(title = titleTest, text = textTest, userId = userIdTest)
-        FunctionComments().createComment(noteId = noteIdTest, message = messageTest)
-        FunctionComments().deleteComment(noteId = noteIdTest, commentId = commentIdTest)
+        FunctionNotes().add(notes = notesTest, 0)
+        FunctionComments().add(commentTest, 1)
+        FunctionComments().delete(noteId = noteIdTest, commentId = commentIdTest)
         val result = FunctionComments().restoreComments(noteId = noteIdTest, commentId = commentIdTest)
 
         // assert
